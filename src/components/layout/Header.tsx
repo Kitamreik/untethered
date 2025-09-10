@@ -1,5 +1,6 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import logoPicture  from "@/assets/logo.png"
 
 const Header = () => {
   return (
@@ -8,7 +9,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="text-primary-foreground font-semibold text-lg">
+              <div className="text-primary-foreground font-semibold text-lg">
               Untethered<br />
               <span className="text-sm font-normal">Coaching LLC</span>
             </div>
