@@ -8,7 +8,8 @@ import CTASection from "@/components/sections/CTASection";
 import MapSection from "@/components/sections/MapSection";
 import FormSection from "@/components/sections/FormSection";
 import PackageBooking from "@/components/sections/PackageBooking";
-import Footer from "@/components/sections/Footer";
+import AdminDashboard from "@/components/sections/AdminDashboard";
+import Footer from "@/components/layout/Footer";
 
 const Index = () => {
   return (
@@ -22,7 +23,8 @@ const Index = () => {
         <CTASection />
         <FormSection/> {/* generate form */}
         <ServicesSection />
-        <PackageBooking/>
+        <PackageBooking/> {/*in development, set up stripe SDK */}
+        <AdminDashboard/>
         <MapSection />
       </main>
       <Footer/>

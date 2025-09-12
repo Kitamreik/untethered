@@ -2,12 +2,22 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-// Stripe public key
-const stripePromise = loadStripe("pk_test_XXXXXXXXXXXXXXXXXXXXXXXX");
+// Load Stripe publishable key from env
+const stripePromise = loadStripe(
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string
+);
+
+// Backend API base URL from env
+const API_BASE = import.meta.env.VITE_API_BASE as string;
 
 interface Package {
   id: string;
@@ -21,66 +31,109 @@ const packages: Package[] = [
   { id: "pkg3", name: "10 Sessions Package", price: 40000 },
 ];
 
-const CheckoutForm: React.FC<{ selectedPackage: Package; onPaymentSuccess: () => void }> = ({
-  selectedPackage,
-  onPaymentSuccess,
-}) => {
+const CheckoutForm: React.FC<{
+  selectedPackage: Package;
+  onPaymentSuccess: () => void;
+  onCancel: () => void;
+}> = ({ selectedPackage, onPaymentSuccess, onCancel }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!stripe || !elements) return;
     setLoading(true);
+    setErrorMessage(null);
 
-    // Call backend to create PaymentIntent
-    const response = await fetch("/api/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ packageId: selectedPackage.id }),
-    });
-    const paymentIntent = await response.json();
-
-    const result = await stripe.confirmCardPayment(paymentIntent.client_secret, {
-      payment_method: { card: elements.getElement(CardElement)! },
-    });
-
-    if (result.error) {
-      alert(result.error.message);
-      setLoading(false);
-    } else if (result.paymentIntent?.status === "succeeded") {
-      onPaymentSuccess();
-      setLoading(false);
-
-      // Log session in backend
-      await fetch("/api/log-session", {
+    try {
+      const response = await fetch(`${API_BASE}/create-payment-intent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ packageId: selectedPackage.id }),
+        body: JSON.stringify({
+          packageId: selectedPackage.id,
+          price: selectedPackage.price,
+        }),
       });
+
+      if (!response.ok) throw new Error("Failed to create PaymentIntent");
+
+      const { clientSecret } = await response.json();
+
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: { card: elements.getElement(CardElement)! },
+      });
+
+      if (result.error) {
+        setErrorMessage(result.error.message ?? "Payment failed");
+      } else if (result.paymentIntent?.status === "succeeded") {
+        await fetch(`${API_BASE}/log-session`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ packageId: selectedPackage.id }),
+        });
+        onPaymentSuccess();
+      }
+    } catch (err) {
+      console.error("Payment error:", err);
+      setErrorMessage("Something went wrong during payment.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
-      <h3 className="text-xl font-semibold text-center">{selectedPackage.name}</h3>
+      <h3 className="text-xl font-semibold text-center">
+        {selectedPackage.name}
+      </h3>
       <p className="text-center text-gray-600">
         Price: ${(selectedPackage.price / 100).toFixed(2)}
       </p>
-      <CardElement className="p-4 border rounded-lg" />
-      <Button
-        type="submit"
-        variant="cta"
-        size="lg"
-        className="w-full text-xl"
-        disabled={loading}
-      >
-        {loading ? "Processing..." : "Pay & Book"}
-      </Button>
+
+      {/* Stripe Card Element with proper styling */}
+      <div className="p-3 border rounded-lg">
+        <CardElement
+          options={{
+            style: {
+              base: {
+                fontSize: "16px",
+                color: "#32325d",
+                "::placeholder": { color: "#a0aec0" },
+              },
+              invalid: { color: "#e53e3e" },
+            },
+          }}
+        />
+      </div>
+
+      {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+
+      <div className="flex gap-3">
+        <Button
+          type="submit"
+          variant="cta"
+          size="lg"
+          className="flex-1 text-xl"
+          disabled={loading}
+        >
+          {loading ? "Processing..." : "Pay & Book"}
+        </Button>
+        <Button
+          type="button"
+          variant="secondary"
+          size="lg"
+          className="flex-1"
+          onClick={onCancel}
+        >
+          Cancel
+        </Button>
+      </div>
     </form>
   );
 };
+
 
 const PackageBooking: React.FC = () => {
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
@@ -90,19 +143,18 @@ const PackageBooking: React.FC = () => {
   const handlePaymentSuccess = () => setPaymentSuccess(true);
 
   const handleBookSession = async () => {
-    if (!selectedDate) return;
+    if (!selectedDate || !selectedPackage) return;
 
-    // Send selected session date to backend
-    await fetch("/api/book-session", {
+    await fetch(`${API_BASE}/book-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        packageId: selectedPackage?.id,
+        packageId: selectedPackage.id,
         sessionDate: selectedDate.toISOString(),
       }),
     });
 
-    alert("Session booked successfully!");
+    alert("✅ Session booked successfully!");
   };
 
   return (
@@ -115,6 +167,7 @@ const PackageBooking: React.FC = () => {
           <hr className="w-24 h-1 bg-accent mx-auto rounded" />
         </div>
 
+        {/* Package selection */}
         {!selectedPackage && (
           <div className="flex flex-col md:flex-row justify-center gap-6">
             {packages.map((pkg) => (
@@ -124,20 +177,28 @@ const PackageBooking: React.FC = () => {
                 onClick={() => setSelectedPackage(pkg)}
               >
                 <h3 className="text-xl font-semibold">{pkg.name}</h3>
-                <p className="mt-2 text-gray-600">${(pkg.price / 100).toFixed(2)}</p>
+                <p className="mt-2 text-gray-600">
+                  ${(pkg.price / 100).toFixed(2)}
+                </p>
               </div>
             ))}
           </div>
         )}
 
+        {/* Payment form */}
         {selectedPackage && !paymentSuccess && (
           <div className="mt-12">
             <Elements stripe={stripePromise}>
-              <CheckoutForm selectedPackage={selectedPackage} onPaymentSuccess={handlePaymentSuccess} />
+              <CheckoutForm
+                selectedPackage={selectedPackage}
+                onPaymentSuccess={handlePaymentSuccess}
+                onCancel={() => setSelectedPackage(null)} 
+              />
             </Elements>
           </div>
         )}
 
+        {/* Session booking */}
         {paymentSuccess && (
           <div className="mt-12 text-center space-y-4">
             <h3 className="text-xl font-semibold">Select a Session Date</h3>
@@ -156,6 +217,7 @@ const PackageBooking: React.FC = () => {
               onClick={handleBookSession}
               disabled={!selectedDate}
             >
+              <CalendarIcon className="w-5 h-5 mr-2" />
               Book Session
             </Button>
           </div>
