@@ -1,4 +1,11 @@
 import React, { useEffect, useState } from "react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
 
 // Load API base from environment variable
 const API_BASE = import.meta.env.VITE_API_BASE as string;
@@ -28,7 +35,13 @@ const AdminDashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         const purchaseRes = await fetch(`${API_BASE}/admin/purchases`);
-        const sessionRes = await fetch(`${API_BASE}/admin/sessions`);
+        const sessionRes = await fetch(`${API_BASE}/admin/sessions`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-api-key": import.meta.env.VITE_ADMIN_API_KEY,
+          },
+        });
 
         if (!purchaseRes.ok || !sessionRes.ok) {
           throw new Error("Failed to fetch admin data");
@@ -51,6 +64,8 @@ const AdminDashboard: React.FC = () => {
 
   if (loading) return <p className="text-center">Loading admin data...</p>;
 
+  //Initial MVP table
+  {/*
   return (
     <section className="py-16 bg-gradient-subtle">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,7 +73,6 @@ const AdminDashboard: React.FC = () => {
           Admin Dashboard
         </h2>
 
-        {/* Purchases Table */}
         <div className="mb-12">
           <h3 className="text-2xl font-semibold mb-4">Purchased Packages</h3>
           <div className="overflow-x-auto">
@@ -87,8 +101,7 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Sessions Table */}
-        <div>
+        <div className="mb-12">
           <h3 className="text-2xl font-semibold mb-4">Booked Sessions</h3>
           <div className="overflow-x-auto">
             <table className="min-w-full border border-gray-300 rounded-lg">
@@ -120,6 +133,95 @@ const AdminDashboard: React.FC = () => {
       </div>
     </section>
   );
+  */}  
+
+  //Refactored for responsiveness
+  return (
+    <section className="py-16 bg-gradient-subtle">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-8 text-center">
+          Admin Dashboard
+        </h2>
+  
+        {/* Carousel Wrapper */}
+        <Carousel className="w-full">
+          <CarouselContent>
+            {/* Purchases Table Slide */}
+            <CarouselItem>
+              <div className="flex flex-col">
+                <h3 className="text-2xl font-semibold mb-4">Purchased Packages</h3>
+                <div className="flex-1 overflow-x-auto overflow-y-auto max-h-[400px] border rounded-lg">
+                  <table className="min-w-full border-collapse">
+                    <thead className="bg-gray-100 sticky top-0 z-10">
+                      <tr>
+                        <th className="px-4 py-2 border text-sm sm:text-base">User Email</th>
+                        <th className="px-4 py-2 border text-sm sm:text-base">Package</th>
+                        <th className="px-4 py-2 border text-sm sm:text-base">Amount ($)</th>
+                        <th className="px-4 py-2 border text-sm sm:text-base">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {purchases.map((p) => (
+                        <tr key={p.id} className="text-center hover:bg-gray-50">
+                          <td className="px-4 py-2 border break-words">{p.userEmail}</td>
+                          <td className="px-4 py-2 border">{p.packageName}</td>
+                          <td className="px-4 py-2 border">{(p.amount / 100).toFixed(2)}</td>
+                          <td className="px-4 py-2 border">
+                            {new Date(p.createdAt).toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </CarouselItem>
+  
+            {/* Sessions Table Slide */}
+            <CarouselItem>
+              <div className="flex flex-col">
+                <h3 className="text-2xl font-semibold mb-4">Booked Sessions</h3>
+                <div className="flex-1 overflow-x-auto overflow-y-auto max-h-[400px] border rounded-lg">
+                  <table className="min-w-full border-collapse">
+                    <thead className="bg-gray-100 sticky top-0 z-10">
+                      <tr>
+                        <th className="px-4 py-2 border text-sm sm:text-base">User Email</th>
+                        <th className="px-4 py-2 border text-sm sm:text-base">Package</th>
+                        <th className="px-4 py-2 border text-sm sm:text-base">Session Date</th>
+                        <th className="px-4 py-2 border text-sm sm:text-base">Booked At</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sessions.map((s) => (
+                        <tr key={s.id} className="text-center hover:bg-gray-50">
+                          <td className="px-4 py-2 border break-words">{s.userEmail}</td>
+                          <td className="px-4 py-2 border">{s.packageName}</td>
+                          <td className="px-4 py-2 border">
+                            {new Date(s.sessionDate).toLocaleString()}
+                          </td>
+                          <td className="px-4 py-2 border">
+                            {new Date(s.createdAt).toLocaleString()}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </CarouselItem>
+          </CarouselContent>
+  
+          {/* Carousel Controls */}
+          <div className="flex justify-center gap-4 mt-4">
+            <CarouselPrevious />
+            <CarouselNext />
+          </div>
+        </Carousel>
+      </div>
+    </section>
+  );
+  
+  
 };
 
 export default AdminDashboard;
