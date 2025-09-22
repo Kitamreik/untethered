@@ -1,5 +1,22 @@
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+// import { createRoot } from 'react-dom/client'
+// import App from './App.tsx'
+// import './index.css'
 
-createRoot(document.getElementById("root")!).render(<App />);
+// createRoot(document.getElementById("root")!).render(<App />);
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import App from "./App";
+import "./index.css";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY!);
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <Elements stripe={stripePromise}>
+      <App />
+    </Elements>
+  </React.StrictMode>
+);

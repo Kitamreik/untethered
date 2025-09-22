@@ -23,8 +23,7 @@ const CTASection: React.FC = () => {
         
         <Card className="max-w-4xl mx-auto shadow-warm bg-gradient-subtle border-warm/20">
           <CardContent className="p-8 md:p-12 text-center">
-            {/* MVP button: sends email to Air */}
-            {/* a href="mailto:untetheredcoachingllc@gmail.com?subject=Free%20Intro%20Class%20Sign%20Up"  */}
+            {/* MVP button: sends email to Erin */}
             <div className="mb-8">
               <Button 
                 variant="cta" 
@@ -32,7 +31,7 @@ const CTASection: React.FC = () => {
                 className="text-xl px-12 py-6 mb-6"
                 asChild
               >
-                <a href="mailto:untetheredcoachingllc@gmail.com?subject=Free%20Intro%20Class%20Sign%20Up"><Mail className="w-6 h-6 mr-2" />Send Email</a>
+                <a href="mailto:untetheredcoachingllc@gmail.com?subject=[NEW CLIENT] %20Interested%20in%20Coaching"><Mail className="w-6 h-6 mr-2" />Send Email</a>
               </Button>
             </div>
             <div className="text-center">

@@ -26,34 +26,65 @@ interface Session {
   createdAt: string;
 }
 
+interface Intake {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  services: string;
+  tier: string;
+  questions: string;
+  createdAt: string;
+}
+
 const AdminDashboard: React.FC = () => {
+  //Stripe
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
+  //Form Intake
+  const [submissions, setSubmissions] = useState<Intake[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const purchaseRes = await fetch(`${API_BASE}/admin/purchases`);
+        const purchaseRes = await fetch(`${API_BASE}/admin/purchases`).then((res) => res.json());
         const sessionRes = await fetch(`${API_BASE}/admin/sessions`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             "x-admin-api-key": import.meta.env.VITE_ADMIN_API_KEY,
           },
-        });
+        })
+        .then((res) => res.json());
+        
 
-        if (!purchaseRes.ok || !sessionRes.ok) {
+        const intakeRes = await fetch(`${API_BASE}/admin/intakes`, {
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-api-key": import.meta.env.VITE_ADMIN_API_KEY,
+          },
+        })
+        .then((res) => res.json());
+        
+
+
+        if (!purchaseRes.ok || !sessionRes.ok || !intakeRes.ok) {
           throw new Error("Failed to fetch admin data");
         }
 
         const purchaseData = await purchaseRes.json();
         const sessionData = await sessionRes.json();
+        const intakesData = await intakeRes.json();
 
         setPurchases(purchaseData);
         setSessions(sessionData);
+        setSubmissions(intakesData);
+        
       } catch (err) {
         console.error("Error fetching admin data:", err);
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -63,77 +94,7 @@ const AdminDashboard: React.FC = () => {
   }, []);
 
   if (loading) return <p className="text-center">Loading admin data...</p>;
-
-  //Initial MVP table
-  {/*
-  return (
-    <section className="py-16 bg-gradient-subtle">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-primary mb-8 text-center">
-          Admin Dashboard
-        </h2>
-
-        <div className="mb-12">
-          <h3 className="text-2xl font-semibold mb-4">Purchased Packages</h3>
-          <div className="overflow-x-auto">
-            <table className="min-w-full border border-gray-300 rounded-lg">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="px-4 py-2 border">User Email</th>
-                  <th className="px-4 py-2 border">Package</th>
-                  <th className="px-4 py-2 border">Amount ($)</th>
-                  <th className="px-4 py-2 border">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {purchases.map((p) => (
-                  <tr key={p.id} className="text-center">
-                    <td className="px-4 py-2 border">{p.userEmail}</td>
-                    <td className="px-4 py-2 border">{p.packageName}</td>
-                    <td className="px-4 py-2 border">{(p.amount / 100).toFixed(2)}</td>
-                    <td className="px-4 py-2 border">
-                      {new Date(p.createdAt).toLocaleString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className="mb-12">
-          <h3 className="text-2xl font-semibold mb-4">Booked Sessions</h3>
-          <div className="overflow-x-auto">
-            <table className="min-w-full border border-gray-300 rounded-lg">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="px-4 py-2 border">User Email</th>
-                  <th className="px-4 py-2 border">Package</th>
-                  <th className="px-4 py-2 border">Session Date</th>
-                  <th className="px-4 py-2 border">Booked At</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sessions.map((s) => (
-                  <tr key={s.id} className="text-center">
-                    <td className="px-4 py-2 border">{s.userEmail}</td>
-                    <td className="px-4 py-2 border">{s.packageName}</td>
-                    <td className="px-4 py-2 border">
-                      {new Date(s.sessionDate).toLocaleString()}
-                    </td>
-                    <td className="px-4 py-2 border">
-                      {new Date(s.createdAt).toLocaleString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-  */}  
+  if (error) return <p className="text-red-500">{error}</p>;
 
   //Refactored for responsiveness
   return (
@@ -142,7 +103,17 @@ const AdminDashboard: React.FC = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-primary mb-8 text-center">
           Admin Dashboard
         </h2>
-  
+        <span>
+          <h3>Intake Form Entries</h3>
+            <ul>
+            {submissions.map((s) => (
+              <li key={s._id} className="border-b py-2">
+                <p><strong>{s.name}</strong> — {s.email}</p>
+                <p>{s.services} ({s.tier})</p>
+              </li>
+            ))}
+          </ul>
+        </span>
         {/* Carousel Wrapper */}
         <Carousel className="w-full">
           <CarouselContent>

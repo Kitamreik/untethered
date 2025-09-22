@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="mailto:UntetheredCoachingLLC@gmail.com"
+                  href="mailto:untetheredcoachingllc@gmail.com"
                   className="hover:text-green-600 transition-colors"
                 >
                 <Mail className="w-6 h-6" />

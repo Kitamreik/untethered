@@ -1,6 +1,7 @@
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import logoPicture  from "@/assets/logo.png"
+import { Link } from "react-router-dom";
+// import logoPicture  from "./assets/logo.png";
 
 const Header = () => {
   return (
@@ -9,7 +10,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-              <div className="text-primary-foreground font-semibold text-lg">
+            <div className="text-primary-foreground font-semibold text-lg">
               Untethered<br />
               <span className="text-sm font-normal">Coaching LLC</span>
             </div>
@@ -17,12 +18,24 @@ const Header = () => {
 
           {/* Navigation */}
           <nav className="hidden md:flex space-x-8">
-            <a 
-              href="#home" 
+            <Link 
+              to="/" 
               className="text-primary-foreground hover:text-accent transition-colors duration-300"
             >
               Home
-            </a>
+            </Link>
+            <Link 
+              to="/intake" 
+              className="text-primary-foreground hover:text-accent transition-colors duration-300"
+            >
+              Intake
+            </Link>
+            <Link 
+              to="/booking" 
+              className="text-primary-foreground hover:text-accent transition-colors duration-300"
+            >
+              Booking
+            </Link>
           </nav>
 
           {/* Search */}

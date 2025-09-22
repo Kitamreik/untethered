@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
@@ -308,6 +309,11 @@ const CheckoutForm: React.FC<{
 };
 
 const PackageBooking: React.FC = () => {
+  //Stripe and Routing
+  // const stripe = useStripe();
+  // const elements = useElements();
+  // const navigate = useNavigate();
+
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 // import { v4 as uuidv4 } from "uuid";
 
 const API_BASE = import.meta.env.VITE_API_BASE as string;
@@ -15,6 +16,7 @@ interface IntakeForm {
 }
 
 const FormSection: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<IntakeForm>({
     name: "",
     email: "",
@@ -39,7 +41,7 @@ const FormSection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_BASE}/intake`, {
+      const response = await fetch(`${API_BASE}/admin/intake`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -55,6 +57,7 @@ const FormSection: React.FC = () => {
       const saved = await response.json();
       setSubmissions([...submissions, saved]); // update UI
       setFormData({ name: "", email: "", phone: "", services: "", tier: "", questions: "" });
+      navigate("/confirmation");
     } catch (err) {
       console.error("Error submitting intake form:", err);
     }
@@ -118,11 +121,11 @@ const FormSection: React.FC = () => {
                 className="w-full border rounded-lg p-3"
               />
               {/* added */}
-              <input
+              {/* <input
                 type="datetime-local"
-                value={sessionDate}
+                value={formData.day}
                 onChange={(e) => setSessionDate(e.target.value)}
-              />
+              /> */}
               {/* added */}
               <select
                 name="tier"
