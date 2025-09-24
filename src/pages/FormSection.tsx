@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-// import { v4 as uuidv4 } from "uuid";
+import { useNavigate, Link } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE as string;
 
@@ -28,7 +27,6 @@ const FormSection: React.FC = () => {
 
   const [submissions, setSubmissions] = useState<IntakeForm[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [sessionDate, setSessionDate] = useState<string | null>(null);
 
   // Handle input changes
   const handleChange = (
@@ -41,7 +39,7 @@ const FormSection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_BASE}/admin/intake`, {
+      const response = await fetch(`${API_BASE}/admin/intakes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -66,7 +64,7 @@ const FormSection: React.FC = () => {
   // Fetch existing submissions
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`${API_BASE}/intake`);
+      const res = await fetch(`${API_BASE}/admin/all-intakes`);
       const data = await res.json();
       setSubmissions(data);
     };
@@ -150,6 +148,18 @@ const FormSection: React.FC = () => {
                 Submit
               </Button>
             </form>
+             <hr />
+            <br />
+            <div className="mb-8 p-8 md:p-12 text-center">
+            
+              <Link
+                  to="/"
+                  className="inline-block px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/80"
+              >
+                  Back to Home
+              </Link>
+            
+            </div>
           </CardContent>
         </Card>
 

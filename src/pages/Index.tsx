@@ -12,7 +12,8 @@ import MapSection from "@/components/sections/MapSection";
 import FormSection from "@/pages/FormSection";
 import PackageBooking from "@/pages/PackageBooking";
 import AdminDashboard from "@/pages/AdminDashboard";
-import FormDashboard from "@/components/sections/FormDashboard";
+import FormDashboard from "@/pages/FormDashboard";
+import MVPAdminDashboard from "./MVPAdminDashboard";
 import Footer from "@/components/layout/Footer";
 import ConfirmationPage from "@/pages/ConfirmationPage";
 
@@ -31,16 +32,8 @@ const Index: React.FC = () => {
         <PackageBooking/> 
         <AdminDashboard/> 
         <FormDashboard/>
-        {/* <ConfirmationPage/> */}
-        {/* Booking flow with routing */}
-        <Routes>
-        <Route path="/intake" element={<FormSection />} />
-          <Route path="/booking" element={<PackageBooking />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/confirmation" element={<ConfirmationPage />} />      
-        </Routes>
-        {/* end */}
-        {/* <MapSection /> */}
+        {/* <MVPAdminDashboard/>  */} {/* admin path, MVP skeleton */}
+        <MapSection />
       </main>
       <Footer/>
     </div>

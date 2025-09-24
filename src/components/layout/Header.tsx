@@ -24,18 +24,19 @@ const Header = () => {
             >
               Home
             </Link>
-            <Link 
-              to="/intake" 
+            {/* conditional rendering? */}
+            {/* <Link 
+              to="/api/admin/intakes" 
               className="text-primary-foreground hover:text-accent transition-colors duration-300"
             >
               Intake
             </Link>
             <Link 
-              to="/booking" 
+              to="api/admin/bookings" 
               className="text-primary-foreground hover:text-accent transition-colors duration-300"
             >
               Booking
-            </Link>
+            </Link> */}
           </nav>
 
           {/* Search */}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { loadStripe } from "@stripe/stripe-js";
@@ -84,6 +84,7 @@ const TierAccordion: React.FC<{
       </div>
     )}
   </div>
+  
 );
 
 const CheckoutForm: React.FC<{

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Carousel,
   CarouselContent,
@@ -49,42 +50,37 @@ const AdminDashboard: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const purchaseRes = await fetch(`${API_BASE}/admin/purchases`).then((res) => res.json());
-        const sessionRes = await fetch(`${API_BASE}/admin/sessions`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "x-admin-api-key": import.meta.env.VITE_ADMIN_API_KEY,
-          },
-        })
-        .then((res) => res.json());
-        
-
-        const intakeRes = await fetch(`${API_BASE}/admin/intakes`, {
-          headers: {
-            "Content-Type": "application/json",
-            "x-admin-api-key": import.meta.env.VITE_ADMIN_API_KEY,
-          },
-        })
-        .then((res) => res.json());
-        
-
-
-        if (!purchaseRes.ok || !sessionRes.ok || !intakeRes.ok) {
-          throw new Error("Failed to fetch admin data");
+        //Helper
+        const fetchWithAuth = async (url: string) => {
+          const res = await fetch(url, {
+            headers: {
+              "Content-Type": "application/json",
+              "x-admin-api-key": import.meta.env.VITE_ADMIN_API_KEY || "",
+            },
+          });
+          if (!res.ok) {
+            const text = await res.text();
+            throw new Error(`Request to ${url} failed: ${res.status} ${text}`);
+          }
+          return res.json();
         }
+        //Helper
 
-        const purchaseData = await purchaseRes.json();
-        const sessionData = await sessionRes.json();
-        const intakesData = await intakeRes.json();
+        //Fetch all endpoints in parallel
+         
+        const [purchases, sessions, submissions] = await Promise.all([
+          fetchWithAuth(`${API_BASE}/admin/purchases`),
+          fetchWithAuth(`${API_BASE}/admin/sessions`),
+          fetchWithAuth(`${API_BASE}/admin/intakes`),
+        ]);
 
-        setPurchases(purchaseData);
-        setSessions(sessionData);
-        setSubmissions(intakesData);
+        setPurchases(purchases);
+        setSessions(sessions);
+        setSubmissions(submissions);
         
       } catch (err) {
         console.error("Error fetching admin data:", err);
-        setError(err.message);
+        setError(err.message || "Failed to fetch admin data");
       } finally {
         setLoading(false);
       }
@@ -94,7 +90,7 @@ const AdminDashboard: React.FC = () => {
   }, []);
 
   if (loading) return <p className="text-center">Loading admin data...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (error) return <p className="text-red-500 text-center">{error}</p>;
 
   //Refactored for responsiveness
   return (
@@ -104,7 +100,7 @@ const AdminDashboard: React.FC = () => {
           Admin Dashboard
         </h2>
         <span>
-          <h3>Intake Form Entries</h3>
+          <h3 className="text-2xl font-semibold mb-4">Intake Form Entries</h3>
             <ul>
             {submissions.map((s) => (
               <li key={s._id} className="border-b py-2">
@@ -188,6 +184,18 @@ const AdminDashboard: React.FC = () => {
             <CarouselNext />
           </div>
         </Carousel>
+      </div>
+      <hr />
+      <br />
+      <div className="mb-8 p-8 md:p-12 text-center">
+      
+        <Link
+            to="/"
+            className="inline-block px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/80"
+        >
+            Back to Home
+        </Link>
+      
       </div>
     </section>
   );
