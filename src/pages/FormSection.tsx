@@ -6,6 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 const API_BASE = import.meta.env.VITE_API_BASE as string;
 
 interface IntakeForm {
+  _id: string;
   name: string;
   email: string;
   phone: string;
@@ -17,6 +18,7 @@ interface IntakeForm {
 const FormSection: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<IntakeForm>({
+    _id: "",
     name: "",
     email: "",
     phone: "",
@@ -54,7 +56,7 @@ const FormSection: React.FC = () => {
 
       const saved = await response.json();
       setSubmissions([...submissions, saved]); // update UI
-      setFormData({ name: "", email: "", phone: "", services: "", tier: "", questions: "" });
+      setFormData({_id: "", name: "", email: "", phone: "", services: "", tier: "", questions: "" });
       navigate("/confirmation");
     } catch (err) {
       console.error("Error submitting intake form:", err);
@@ -64,12 +66,23 @@ const FormSection: React.FC = () => {
   // Fetch existing submissions
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`${API_BASE}/admin/all-intakes`);
+      const res = await fetch(`${API_BASE}/admin/all-intakes`, {
+        headers: {
+          "x-admin-api-key": import.meta.env.VITE_ADMIN_API_KEY || "",
+        },
+      });
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch intakes: ${res.statusText}`);
+      }
+
       const data = await res.json();
       setSubmissions(data);
     };
     fetchData();
   }, []);
+
+  if (errorMessage) return <p style={{ color: "red" }}>{errorMessage}</p>;
 
   return (
     <section className="py-16 bg-background">
@@ -84,6 +97,15 @@ const FormSection: React.FC = () => {
         <Card className="max-w-4xl mx-auto shadow-soft hover:shadow-warm transition-all duration-300">
           <CardContent className="p-8 md:p-12">
             <form onSubmit={handleSubmit} className="space-y-6 text-lg leading-relaxed">
+            <input
+                type="text"
+                name="_id"
+                placeholder="Please enter an ID code in the format of 00#. Ex. 002"
+                value={formData._id}
+                onChange={handleChange}
+                className="w-full border rounded-lg p-3"
+                required
+              />
               <input
                 type="text"
                 name="name"
@@ -162,36 +184,6 @@ const FormSection: React.FC = () => {
             </div>
           </CardContent>
         </Card>
-
-        {/* Table of submissions */}
-        {submissions.length > 0 && (
-          <div className="mt-12 overflow-x-auto">
-            <table className="min-w-full border border-gray-300 rounded-lg">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="px-4 py-2 border">Name</th>
-                  <th className="px-4 py-2 border">Email</th>
-                  <th className="px-4 py-2 border">Phone</th>
-                  <th className="px-4 py-2 border">Services</th>
-                  <th className="px-4 py-2 border">Tier</th>
-                  <th className="px-4 py-2 border">Questions</th>
-                </tr>
-              </thead>
-              <tbody>
-              {submissions.map((entry) => (
-                <tr key={entry.email} className="text-center">
-                  <td className="px-4 py-2 border">{entry.name}</td>
-                  <td className="px-4 py-2 border">{entry.email}</td>
-                  <td className="px-4 py-2 border">{entry.phone}</td>
-                  <td className="px-4 py-2 border">{entry.services}</td>
-                  <td className="px-4 py-2 border">{entry.tier}</td>
-                  <td className="px-4 py-2 border">{entry.questions}</td>
-                </tr>
-              ))}
-              </tbody>
-            </table>
-          </div>
-        )}
       </div>
     </section>
   );

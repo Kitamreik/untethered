@@ -27,24 +27,11 @@ interface Session {
   createdAt: string;
 }
 
-interface Intake {
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  services: string;
-  tier: string;
-  questions: string;
-  createdAt: string;
-}
-
 const AdminDashboard: React.FC = () => {
   //Stripe
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
-  //Form Intake
-  const [submissions, setSubmissions] = useState<Intake[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -68,15 +55,14 @@ const AdminDashboard: React.FC = () => {
 
         //Fetch all endpoints in parallel
          
-        const [purchases, sessions, submissions] = await Promise.all([
+        const [purchases, sessions] = await Promise.all([
           fetchWithAuth(`${API_BASE}/admin/purchases`),
-          fetchWithAuth(`${API_BASE}/admin/sessions`),
-          fetchWithAuth(`${API_BASE}/admin/intakes`),
+          fetchWithAuth(`${API_BASE}/admin/sessions`)
         ]);
 
         setPurchases(purchases);
         setSessions(sessions);
-        setSubmissions(submissions);
+       
         
       } catch (err) {
         console.error("Error fetching admin data:", err);
@@ -97,19 +83,7 @@ const AdminDashboard: React.FC = () => {
     <section className="py-16 bg-gradient-subtle">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl md:text-4xl font-bold text-primary mb-8 text-center">
-          Admin Dashboard
-        </h2>
-        <span>
-          <h3 className="text-2xl font-semibold mb-4">Intake Form Entries</h3>
-            <ul>
-            {submissions.map((s) => (
-              <li key={s._id} className="border-b py-2">
-                <p><strong>{s.name}</strong> — {s.email}</p>
-                <p>{s.services} ({s.tier})</p>
-              </li>
-            ))}
-          </ul>
-        </span>
+          Stripe Admin Dashboard </h2>
         {/* Carousel Wrapper */}
         <Carousel className="w-full">
           <CarouselContent>

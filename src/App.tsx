@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import FormSection from "./pages/FormSection";
 import FormDashboard from "./pages/FormDashboard";
 import ConfirmationPage from "./pages/ConfirmationPage";
+import DeletePage from "./pages/DeletePage";
 import PackageBooking from "./pages/PackageBooking";
 import MVPAdminDashboard from "./pages/MVPAdminDashboard";
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/api/admin/bookings" element={<PackageBooking />} />
           <Route path="/form" element={<FormSection />} />
           <Route path="/confirmation" element={<ConfirmationPage/>} />
+          <Route path="/delete-confirmation" element={<DeletePage/>} />
           <Route path="/api/admin/intakes" element={<FormDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
