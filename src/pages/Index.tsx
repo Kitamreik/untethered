@@ -27,11 +27,11 @@ const Index: React.FC = () => {
         <SlideshowSection />
         <FrameworkSection />
         <CTASection /> */} {/* all set */}
-        <FormSection/>
+        {/* <FormSection/> */} {/* all set */}
         {/* <ServicesSection /> */} {/* all set */}
         <PackageBooking/>  {/* Stripe IP */}
-        <AdminDashboard/> 
-        <FormDashboard/>
+        <AdminDashboard/> {/* won't render w/o stripe */}
+        {/* <FormDashboard/> */} {/* all set */}
         {/* <MVPAdminDashboard/>  */} {/* admin path, MVP skeleton */}
         {/* <MapSection /> */}  {/* all set */}
       </main>

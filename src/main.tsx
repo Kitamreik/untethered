@@ -10,13 +10,14 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import App from "./App";
 import "./index.css";
+import StripeWrapper from "./components/sections/StripeWrapper";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY!);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Elements stripe={stripePromise}>
+    <StripeWrapper>
       <App />
-    </Elements>
+    </StripeWrapper>
   </React.StrictMode>
 );

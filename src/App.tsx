@@ -25,7 +25,7 @@ const App = () => (
           <Route path="/admin" element={<MVPAdminDashboard />} />
           <Route path="/api/admin/bookings" element={<PackageBooking />} />
           <Route path="/form" element={<FormSection />} />
-          <Route path="/confirmation" element={<ConfirmationPage/>} />
+          <Route path="/confirmation-page" element={<ConfirmationPage/>} />
           <Route path="/delete-confirmation" element={<DeletePage/>} />
           <Route path="/api/admin/intakes" element={<FormDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

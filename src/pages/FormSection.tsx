@@ -57,7 +57,7 @@ const FormSection: React.FC = () => {
       const saved = await response.json();
       setSubmissions([...submissions, saved]); // update UI
       setFormData({_id: "", name: "", email: "", phone: "", services: "", tier: "", questions: "" });
-      navigate("/confirmation");
+      navigate("/confirmation-page");
     } catch (err) {
       console.error("Error submitting intake form:", err);
     }
