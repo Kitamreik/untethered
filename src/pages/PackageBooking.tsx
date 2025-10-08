@@ -160,7 +160,7 @@ const CheckoutForm: React.FC<{
           Pay
         </button>
       </form>
-  );
+  )
 };
 
 

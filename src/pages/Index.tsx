@@ -22,18 +22,22 @@ const Index: React.FC = () => {
     <div className="min-h-screen">
       <Header /> {/* Feature for later: have search bar search the page for all matches...? */}
       <main>
-        {/* <HeroSection />
+        <HeroSection />
         <CoachSection/>
         <SlideshowSection />
         <FrameworkSection />
-        <CTASection /> */} {/* all set */}
-        {/* <FormSection/> */} {/* all set */}
-        {/* <ServicesSection /> */} {/* all set */}
-        <PackageBooking/>  {/* Stripe IP */}
-        <AdminDashboard/> {/* won't render w/o stripe */}
-        {/* <FormDashboard/> */} {/* all set */}
-        {/* <MVPAdminDashboard/>  */} {/* admin path, MVP skeleton */}
-        {/* <MapSection /> */}  {/* all set */}
+        <CTASection />
+        <FormSection/> 
+        <ServicesSection /> 
+        {/* <PackageBooking/>   */}
+        {/* Stripe IP */}
+        {/* <AdminDashboard/>  */}
+        {/* won't render w/o stripe */}
+        {/* <FormDashboard/>  */}
+        {/* operational */}
+        {/* <MVPAdminDashboard/>   */}
+        {/* admin path, MVP skeleton */}
+        <MapSection />  
       </main>
       <Footer/>
     </div>
