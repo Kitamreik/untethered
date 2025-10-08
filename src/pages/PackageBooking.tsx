@@ -98,14 +98,14 @@ const CheckoutForm: React.FC<{
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!stripe || !elements) return;
 
-    setLoading(true);
+    // setLoading(true);
     setErrorMessage(null);
 
     try {
@@ -120,7 +120,7 @@ const CheckoutForm: React.FC<{
       if (error) {
         console.error("Payment error:", error.message);
         setErrorMessage(error.message || "Payment failed");
-        setLoading(false);
+        // setLoading(false);
         return;
       }
 
@@ -143,7 +143,7 @@ const CheckoutForm: React.FC<{
       console.error("Payment error:", err);
       setErrorMessage("Something went wrong during payment.");
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -153,10 +153,11 @@ const CheckoutForm: React.FC<{
         {errorMessage && <p className="text-red-600">{errorMessage}</p>}
         <button
           type="submit"
-          disabled={!stripe || loading}
+          disabled={!stripe}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
         >
-          {loading ? "Processing..." : "Pay"}
+          {/* {loading ? "Processing..." : "Pay"} */}
+          Pay
         </button>
       </form>
   );

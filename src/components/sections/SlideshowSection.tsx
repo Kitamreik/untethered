@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+
 import image0 from "@/assets/image0.jpeg";
 import image1 from "@/assets/image1.jpeg";
 import image2 from "@/assets/image2.jpeg";

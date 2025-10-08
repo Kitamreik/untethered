@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import logisticsImage from "@/assets/logistics.png";
+import ResourceAssessment from "@/components/sections/ResourceAssessment"
 
 const ConfirmationPage: React.FC = () => {
   return (
@@ -18,6 +19,12 @@ const ConfirmationPage: React.FC = () => {
               />
               <hr />
               <br />
+              <CardContent className="p-0">
+                <ResourceAssessment/>
+
+              <hr />
+              <br />
+              </CardContent>
               <div className="mb-8 p-8 md:p-12 text-center">
              
                 <Link
