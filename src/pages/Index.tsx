@@ -24,10 +24,10 @@ const Index: React.FC = () => {
       <main>
         <HeroSection />
         <CoachSection/>
-        <SlideshowSection />
         <FrameworkSection />
         <CTASection />
-        <FormSection/> 
+        <MapSection /> 
+        {/* <FormSection/>  */}
         <ServicesSection /> 
         {/* <PackageBooking/>   */}
         {/* Stripe IP */}
@@ -37,7 +37,7 @@ const Index: React.FC = () => {
         {/* operational */}
         {/* <MVPAdminDashboard/>   */}
         {/* admin path, MVP skeleton */}
-        <MapSection />  
+        <SlideshowSection />
       </main>
       <Footer/>
     </div>

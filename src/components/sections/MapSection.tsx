@@ -8,7 +8,7 @@ const MapSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            Locations Across the U.S.
+            Offerings Across the U.S.
           </h2>
           <hr className="w-24 h-1 bg-accent mx-auto rounded" />
         </div>
@@ -51,7 +51,7 @@ const MapSection = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-foreground">
+                  {/* <div className="flex items-center gap-2 text-foreground">
                     <div className="w-3 h-3 bg-nature rounded-full"></div>
                     Class Set A
                   </div>
@@ -62,11 +62,19 @@ const MapSection = () => {
                   <div className="flex items-center gap-2 text-foreground">
                     <div className="w-3 h-3 bg-nature rounded-full"></div>
                     Class Set C
-                  </div>
+                  </div> */}
+                  <Button 
+                      variant="cta" 
+                      size="lg"
+                      className="text-xl px-12 py-6 mb-6 bg-green-700"
+                    >
+                      <ArrowBigRight className="w-6 h-6 mr-2" />
+                      <a href="https://brainbased-wellness.com/?aff=ErinV">Brainbased Wellness</a>
+                    </Button>
                 </div>
               </CardContent>
             </Card>
-
+            <hr />
             <Card className="shadow-soft hover:shadow-warm transition-all duration-300">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-warm">
@@ -76,18 +84,27 @@ const MapSection = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-foreground">
+                  {/* <div className="flex items-center gap-2 text-foreground">
                     <div className="w-3 h-3 bg-warm rounded-full"></div>
                     Client A
                   </div>
                   <div className="flex items-center gap-2 text-foreground">
                     <div className="w-3 h-3 bg-warm rounded-full"></div>
                     Client B
-                  </div>
+                  </div> */}
+                   <Button 
+                      variant="cta" 
+                      size="lg"
+                      className="text-xl px-12 py-6 mb-6 bg-yellow-700"
+                    >
+                      <ArrowBigRight className="w-6 h-6 mr-2" />
+                      <a href="https://www.itsokimjustair.com/services">Services</a>
+                    </Button>
                 </div>
               </CardContent>
             </Card>
-
+            <hr />
+            {/* PENDING */}
             <Card className="shadow-soft hover:shadow-warm transition-all duration-300">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-blue-600">
@@ -116,7 +133,9 @@ const MapSection = () => {
                 </div>
               </CardContent>
             </Card>
-            <Card className="shadow-soft hover:shadow-warm transition-all duration-300">
+
+            {/* PLACEHOLDER */}
+            {/* <Card className="shadow-soft hover:shadow-warm transition-all duration-300">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-red-700">
                   <Calendar className="w-5 h-5" />
@@ -142,7 +161,7 @@ const MapSection = () => {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </div>

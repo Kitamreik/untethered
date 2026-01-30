@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import coachingInfo from "@/assets/coaching-info.png";
+import { Button } from "@/components/ui/button";
 
 const CoachSection = () => {
   return (
@@ -31,19 +32,58 @@ const CoachSection = () => {
           <hr className="w-24 h-1 bg-accent mx-auto rounded" />
         </div>
 
-        {/* Podcast Embed: Apple */}
         <div className="mt-16 max-w-2xl mx-auto">
           <Card className="bg-card shadow-soft">
             <CardContent className="p-8">
-              {/* <h3 className="text-xl font-semibold text-primary mb-4">
-                Featured Podcast
-              </h3>
-              <h4 className="text-lg text-foreground mb-2">
-                Rewiring the Nervous System: Erin Rainwood on Neurosomatic Work & Embracing Neurodivergence
-              </h4>
-              <p className="text-muted-foreground mb-4">
-                Feb 7 • Neuro Revolution | Apple
-              </p> */}
+              <div className="bg-muted rounded-lg p-6 text-center">
+                <span className="text-muted-foreground">
+                <p className="text-lg text-muted-foreground mt-2">
+                To check out my Neurosomatic Intelligence offering, click the button below!
+                </p>
+                <div className="space-y-2">
+                  <br />
+                   <Button 
+                      variant="cta" 
+                      size="lg"
+                      className="text-xl px-12 py-6 mb-6 bg-yellow-700"
+                    >
+                      <a href="https://neurosomaticintelligence.com/?aff=ErinV">View More</a>
+                    </Button>
+                </div>
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+         <div className="mt-16 max-w-2xl mx-auto">
+          <Card className="bg-card shadow-soft">
+            <CardContent className="p-8">
+              <div className="bg-muted rounded-lg p-6 text-center">
+                <span className="text-muted-foreground">
+                <p className="text-lg text-muted-foreground mt-2">
+                To check out my Trauma Rewired Podcast, click the button below!
+                </p>
+                <div className="space-y-2">
+                  <br />
+                   <Button 
+                      variant="cta" 
+                      size="lg"
+                      className="text-xl px-12 py-6 mb-6 bg-yellow-700"
+                    >
+                      <a href="https://neurosomaticintelligence.com/podcast/?aff=ErinV">View More</a>
+                    </Button>
+                </div>
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Podcast Embed: Apple */}
+        {/* <div className="mt-16 max-w-2xl mx-auto">
+          <Card className="bg-card shadow-soft">
+            <CardContent className="p-8">
               <div className="bg-muted rounded-lg p-6 text-center">
                 <span className="text-muted-foreground">
                 <div className="flex justify-center w-full">
@@ -62,20 +102,11 @@ const CoachSection = () => {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
         {/* Podcast Embed: Spotify */}
-        <div className="mt-16 max-w-2xl mx-auto">
+        {/* <div className="mt-16 max-w-2xl mx-auto">
           <Card className="bg-card shadow-soft">
             <CardContent className="p-8">
-              {/* <h3 className="text-xl font-semibold text-primary mb-4">
-                Featured Podcast
-              </h3>
-              <h4 className="text-lg text-foreground mb-2">
-                Rewiring the Nervous System: Erin Rainwood on Neurosomatic Work & Embracing Neurodivergence
-              </h4>
-              <p className="text-muted-foreground mb-4">
-                Feb 7 • Neuro Revolution | Spotify
-              </p> */}
               <div className="bg-muted rounded-lg p-6 text-center">
                 <span className="text-muted-foreground">
                 <div className="flex justify-center w-full">
@@ -97,7 +128,7 @@ const CoachSection = () => {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
     </section>
   );
