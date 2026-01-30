@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
-import coachingInfo from "@/assets/coaching-info.png";
+import QRCode from "@/assets/qr-code.png";
+import coachingInfo from "@/assets/coaching-info.png"
 import { Button } from "@/components/ui/button";
 
 const CoachSection = () => {
@@ -38,7 +39,7 @@ const CoachSection = () => {
               <div className="bg-muted rounded-lg p-6 text-center">
                 <span className="text-muted-foreground">
                 <p className="text-lg text-muted-foreground mt-2">
-                To check out my Neurosomatic Intelligence offering, click the button below!
+                Brainbased Wellness - Virtual classes that help you train your nervous system and body to resolve old patterns, reduce stress, and increase well-being. First 2 weeks free!
                 </p>
                 <div className="space-y-2">
                   <br />
@@ -47,9 +48,14 @@ const CoachSection = () => {
                       size="lg"
                       className="text-xl px-12 py-6 mb-6 bg-yellow-700"
                     >
-                      <a href="https://neurosomaticintelligence.com/?aff=ErinV">View More</a>
+                      <a href="https://brainbased-wellness.com/?aff=ErinV">View More</a>
                     </Button>
                 </div>
+                <br />
+                <hr />
+                <p>
+                  Erin's Sound Byte: "This is a great educational resource for those interested in learning more about neuro somatic work; they offer virtual group classes, but not one on one coaching." 
+                </p>
                 </span>
               </div>
             </CardContent>
@@ -62,7 +68,58 @@ const CoachSection = () => {
               <div className="bg-muted rounded-lg p-6 text-center">
                 <span className="text-muted-foreground">
                 <p className="text-lg text-muted-foreground mt-2">
-                To check out my Trauma Rewired Podcast, click the button below!
+                Neurosomatic Intelligence - Want to learn more? Integrated neuro coaching certification, ongoing education, workshops, and a practitioner directory of excellent contacts.
+                </p>
+                <div className="space-y-2">
+                  <br />
+                   <Button 
+                      variant="cta" 
+                      size="lg"
+                      className="text-xl px-12 py-6 mb-6 bg-yellow-700"
+                    >
+                      
+                      <a href="https://neurosomaticintelligence.com/?aff=ErinV">View More</a>
+                    </Button>
+                </div>
+                <br />
+                <hr />
+                <p>
+                  Erin's Sound Byte: "NSI has completely transformed the way I approach personal growth and coaching. It goes far beyond mindset work or talk therapy by offering simple, actionable steps that actually support the nervous system—helping you get out of your own way. As someone with a history of brain injury, trauma, and neurodivergence, this work wasn’t always easy at first, but it was absolutely worth it. The process challenged me in the best ways and ultimately made me a more grounded, effective coach. I’m not just thinking differently—I’m being differently." 
+                </p>
+                <br />
+                <hr />
+                <div className="space-y-2">
+                  <span className="flex justify-center w-auto">
+                    <p>I'm listed as a Practitioner under their directory!</p>        
+                     
+                  </span>
+                   <Button 
+                      variant="cta" 
+                      size="lg"
+                      className="text-xl px-12 py-6 mb-6 bg-purple-700"
+                    >
+                      <a href="https://neurosomaticintelligence.com/directory">Let's Go!</a>
+                    </Button>
+                    <img 
+                      src={QRCode}
+                      alt="f86QXJoxAAAAAElFTkSuQmCC.png"
+                      className="rounded mx-auto d-block"
+                     />
+                </div>
+                 
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+         <div className="mt-16 max-w-2xl mx-auto">
+          <Card className="bg-card shadow-soft">
+            <CardContent className="p-8">
+              <div className="bg-muted rounded-lg p-6 text-center">
+                <span className="text-muted-foreground">
+                <p className="text-lg text-muted-foreground mt-2">
+                Trauma Rewired Podcast - The podcast that teaches you about your nervous system, how trauma gets stored in the body, and what you can do to heal.
                 </p>
                 <div className="space-y-2">
                   <br />

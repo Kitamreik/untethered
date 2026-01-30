@@ -25,8 +25,8 @@ const Index: React.FC = () => {
         <HeroSection />
         <CoachSection/>
         <FrameworkSection />
-        <CTASection />
         <MapSection /> 
+        <CTASection />
         {/* <FormSection/>  */}
         <ServicesSection /> 
         {/* <PackageBooking/>   */}
