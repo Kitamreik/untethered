@@ -24,7 +24,7 @@ const ServicesSection = () => {
                 className="text-xl px-12 py-6 mb-6"
               >
                 <Calendar className="w-6 h-6 mr-2" />
-                <a href="https://www.itsokimjustair.com/services">Check Out Air's Services</a>
+                <a href="https://www.itsokimjustair.com/services">Air's Services</a>
               </Button>
               </div>
               

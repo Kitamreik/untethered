@@ -45,7 +45,7 @@ const CTASection: React.FC = () => {
                 >
                   <Calendar className="w-6 h-6 mr-2" />
                   {/*Sign Up w/ Google*/} {/* show the Google Calendar iframe */}
-                  {showCalendar ? "Hide Google Calendar" : "Sign Up w/ Google"} {/* have it be a dynamic modal */}
+                  {showCalendar ? "Hide Google Calendar" : "Google Sign In"} {/* have it be a dynamic modal */}
                 </Button>
               </div>
                {/* Google Calendar Iframe */}

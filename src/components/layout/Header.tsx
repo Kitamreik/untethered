@@ -19,7 +19,7 @@ const Header = () => {
           {/* Navigation */}
           <nav className="hidden md:flex space-x-8">
             <Link 
-              to="/" 
+              to="#" 
               className="text-primary-foreground hover:text-accent transition-colors duration-300"
             >
               Home
